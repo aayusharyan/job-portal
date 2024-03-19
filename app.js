@@ -3,7 +3,7 @@ import express from 'express';
 import { createJobPostingController, getJobPostingController, getSingleJobPostingController, updateJobPostingController, deleteJobPostingController, displayJobPostings, displayNewJobPostingForm, displayEditJobPostingForm } from './controller/controller.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 app.set('view engine', 'ejs');
 // app.use(bodyParser.urlencoded({ extended: true }));
