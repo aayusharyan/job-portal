@@ -37,7 +37,7 @@
         }
 
         try {
-          const jobData = await fetch(`http://localhost:3000/api/jobs/${jobId}`);
+          const jobData = await fetch(`/api/jobs/${jobId}`);
           const job = await jobData.json();
 
           document.getElementById('title').value = job.title;
@@ -77,7 +77,7 @@
         };
 
         try {
-          await fetch(`http://localhost:3000/api/jobs/${jobId}`, {
+          await fetch(`/api/jobs/${jobId}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

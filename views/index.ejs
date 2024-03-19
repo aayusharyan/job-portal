@@ -44,7 +44,7 @@
     <script>
       const deleteJob = async (jobId) => {
         try {
-          await fetch(`http://localhost:3000/api/jobs/${jobId}`, {
+          await fetch(`/api/jobs/${jobId}`, {
             method: 'DELETE',
           });
           location.reload();
@@ -57,7 +57,7 @@
       (async () => {
         try {
           const jobListParent = document.getElementById('jobList');
-          const jobList = await fetch('http://localhost:3000/api/jobs');
+          const jobList = await fetch('/api/jobs');
           for(const singleJob of await jobList.json()) {
             const singleJobDiv = document.createElement('div');
             singleJobDiv.classList.add('single-job-data');
