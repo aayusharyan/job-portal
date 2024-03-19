@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Job Portal</title>
+    <style>
+      .single-job-data * {
+        margin: 0;
+        padding: 0;
+      }
+      .single-job-data button {
+        padding: 2px 4px;
+        margin: 0 5px;
+        border: 1px solid red;
+        border-radius: 4px;
+      }
+      .single-job-data {
+        border: 1px solid #000;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .single-job-data:hover {
+        background-color: #f0f0f0;
+      }
+      .job-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Job Portal</h1>
+
+    <button onclick="window.location.href = '/add-job'">Add Job</button>
+    <br /><br />
+
+    <div id="jobList" class="job-list"></div>
+
+    <script>
+      const deleteJob = async (jobId) => {
+        try {
+          await fetch(`http://localhost:3000/api/jobs/${jobId}`, {
+            method: 'DELETE',
+          });
+          location.reload();
+        } catch(e) {
+          console.log(e);
+          alert("Something went wrong, please try again later!");
+        }
+      }
+
+      (async () => {
+        try {
+          const jobListParent = document.getElementById('jobList');
+          const jobList = await fetch('http://localhost:3000/api/jobs');
+          for(const singleJob of await jobList.json()) {
+            const singleJobDiv = document.createElement('div');
+            singleJobDiv.classList.add('single-job-data');
+
+            const title = document.createElement('h3');
+            title.innerText = `${singleJob.title} (${singleJob.company})`;
+
+            const description = document.createElement('p');
+            description.innerText = singleJob.description;
+
+            const location = document.createElement('h5');
+            location.innerText = singleJob.location;
+
+            const salary = document.createElement('p');
+            salary.innerText = `${singleJob.salary} 💰`;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.onclick = () => deleteJob(singleJob._id);
+
+            const editButton = document.createElement('button');
+            editButton.innerText = 'Edit';
+            editButton.onclick = () => window.location.href = `/edit-job?jobId=${singleJob._id}`;
+
+            singleJobDiv.appendChild(title);
+            singleJobDiv.appendChild(description);
+            singleJobDiv.appendChild(location);
+            singleJobDiv.appendChild(salary);
+            singleJobDiv.appendChild(deleteButton);
+            singleJobDiv.appendChild(editButton);
+
+            jobListParent.appendChild(singleJobDiv);
+          }
+        } catch(e) {
+          console.log(e);
+          alert("Something went wrong, please try again later!");
+        }
+      })();
+    </script>
+  </body>
+</html>
