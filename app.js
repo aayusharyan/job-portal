@@ -1,9 +1,12 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 // import bodyParser from 'body-parser';
 import { createJobPostingController, getJobPostingController, getSingleJobPostingController, updateJobPostingController, deleteJobPostingController, displayJobPostings, displayNewJobPostingForm, displayEditJobPostingForm } from './controller/controller.js';
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT ?? 3000;
 
 app.set('view engine', 'ejs');
 // app.use(bodyParser.urlencoded({ extended: true }));
